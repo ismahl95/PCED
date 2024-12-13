@@ -1,0 +1,15 @@
+server:
+  port: 8080 # Puerto en el que correrá la Gateway
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes: # Configuración de rutas estáticas
+        - id: auth-service
+          uri: http://localhost:8081 # Enrutamiento directo al Auth Service en localhost:8081
+          predicates:
+            - Path=/auth/** # Todo lo que inicie con /auth se redirige
+          filters:
+            - RewritePath=/auth/(?<remaining>.*), /${remaining} # Quita el prefijo /auth
