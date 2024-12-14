@@ -14,10 +14,8 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
-        // Usualmente, la URL del JWKS es algo como:
-        // "https://your-auth-server/.well-known/jwks.json"
-        String jwkSetUri = "https://your-auth-server/.well-known/jwks.json";
-        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        String jwkSetUri = "https://your-auth-server/.well-known/jwks.json";  // Asegúrate de que esta URL esté bien configurada.
+        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();  // Crea el decodificador JWT a partir del JWK Set.
     }
 
     @Bean
@@ -29,7 +27,9 @@ public class SecurityConfig {
                         .pathMatchers("/test/**").permitAll() // Permitir acceso sin autenticación a /test/**
                         .anyExchange().authenticated() // Todo lo demás requiere autenticación
                 )
-                .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt) // Configurar JWT
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt()) // Configurar JWT
                 .build();
-    }
+    }    
+    
 }
+

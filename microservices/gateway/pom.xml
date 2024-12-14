@@ -44,6 +44,18 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 
+		<!-- Dependencia para OAuth2 Resource Server (Para JWT) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<!-- Dependencia para soporte JWT con Nimbus -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+
 		<!-- Spring Boot Actuator (Opcional para monitorización) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,11 +81,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Dependencia para OAuth2 Resource Server (Para JWT) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
