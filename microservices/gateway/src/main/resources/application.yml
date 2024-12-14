@@ -11,3 +11,21 @@ spring:
             - Path=/auth/** # Enrutar todas las solicitudes que comiencen con /auth
           filters:
             - AddRequestHeader=X-Source, gateway  # Agregar encabezado para identificar que viene de la Gateway
+
+      # Configuración de CORS global para todas las rutas gestionadas por la Gateway
+      globalcors:
+        corsConfigurations:
+          '[/**]': # Aplica a todas las rutas
+            allowedOrigins:
+              - "http://localhost:4200" # Dominio del front-end en desarrollo
+            allowedMethods:
+              - "GET"
+              - "POST"
+              - "PUT"
+              - "DELETE"
+              - "OPTIONS"
+            allowedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "X-Requested-With"
+            allowCredentials: true # Permitir el uso de cookies/sesiones
