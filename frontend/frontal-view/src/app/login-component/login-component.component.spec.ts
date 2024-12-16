@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponentComponent } from './login-component.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';  // Importar HttpClientTestingModule
+import { AuthService } from './Services/auth.service';  // Importar AuthService si lo usas en el componente
 
 describe('LoginComponentComponent', () => {
   let component: LoginComponentComponent;
@@ -8,11 +10,12 @@ describe('LoginComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: 
-      [
-        LoginComponentComponent,
-        FormsModule
-      ]
+      imports: [
+        LoginComponentComponent,  // Aquí va en imports, no en declarations
+        FormsModule,
+        HttpClientTestingModule  // Añadir HttpClientTestingModule para poder hacer pruebas con HttpClient
+      ],
+      providers: [AuthService]  // Si utilizas AuthService, proporcionarlo en providers
     })
     .compileComponents();
 
@@ -42,10 +45,8 @@ describe('LoginComponentComponent', () => {
     expect(component.password).toBe('testPassword');
   });
 
-  it(`should have the 'login 'title`, () =>
-  {
-    const fixture = TestBed.createComponent(LoginComponentComponent);
-    const app= fixture.componentInstance;
+  it(`should have the 'login' title`, () => {
+    const app = fixture.componentInstance;
     expect(app.title).toEqual('login-view');
   });
 });

@@ -1,0 +1,84 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Job para el microservicio de autenticación
+  build-auth:
+    name: Build & Test Auth Microservice
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: microservices/auth
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Run tests
+        run: mvn test
+
+  # Job para el microservicio de gateway
+  build-gateway:
+    name: Build & Test Gateway Microservice
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: microservices/gateway
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Run tests
+        run: mvn test
+
+  # Job para el frontend Angular
+  build-frontend:
+    name: Build & Test Frontend (Angular)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/frontal-view
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run tests (headless mode)
+        run: npm test -- --browsers=ChromeHeadless
+
+      - name: Build project
+        run: npm run build

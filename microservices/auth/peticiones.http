@@ -1,0 +1,9 @@
+### Autenticación: Capturar el token
+POST http://localhost:8080/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": ""
+}
+
